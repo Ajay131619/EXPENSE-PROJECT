@@ -99,4 +99,4 @@ check
 
 installation
 
-echo $(netstat -lntp | grep 3306 )
+
