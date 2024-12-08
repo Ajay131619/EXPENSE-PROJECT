@@ -64,7 +64,8 @@ installation(){
 }
 
 passwordsetup(){
-mysql -h sql.daw19.online -u root -pExpenseApp@1 -e "show databases;" &>> $logfile
+    
+mysql -h sql.daw19.online -u root -pExpenseApp@1 -e 'show databases;'  &>> $logfile
 
 if [ $? -eq 0 ]
 then
