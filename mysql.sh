@@ -105,7 +105,7 @@ fi
 }
 
 check_status(){
-    systemctl netstat -lntp | grep 3306 &>> $logfile
+    systemctl netstat -ln | grep 3306 &>> $logfile
     #3306 is the port for the sql
 if [ $? -eq 0 ]
 then
