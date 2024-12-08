@@ -12,7 +12,7 @@
 
 folder="/var/log/EX-P_logs"
 timestamp=$(date)
-scriptname=$($0 | awk -F "." {'print $1F'})
+scriptname=$(echo $0 | awk -F "." {'print $1F'})
 logfile="$folder/$scriptname-$timestamp.log"
 
 r="\e[33m" #red colour code
