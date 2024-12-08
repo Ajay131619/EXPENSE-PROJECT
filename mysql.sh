@@ -29,12 +29,12 @@ check(){
 
     if [ $userid -eq 0 ]
     then
-        echo -e " the execution of the script is $g started $n"
+        echo -e " the execution of the script is $g started $n" | tee -a $logfile
         mkdir -p $folder
         echo -e " check the logs in this folder ->> $y "/var/log/EX-P_logs" $n "
     else
-        echo -e " please run this script only using $y sudo access $n "
-        echo -e " the execution of the script is $r failed $n"
+        echo -e " please run this script only using $y sudo access $n " | tee -a $logfile
+        echo -e " the execution of the script is $r failed $n" | tee -a $logfile
         exit 1
     fi
 
@@ -43,60 +43,42 @@ check(){
 valid(){
 if [ $? -eq 0 ]
 then
-    echo -e " mysql server $1 is $g success $n "
+    echo -e " mysql server $1 is $g success $n " | tee -a $logfile
 else
-    echo -e " mysql server $1 is $r failed $n "
+    echo -e " mysql server $1 is $r failed $n " | tee -a $logfile
     exit 1
 fi
 }
 
 installation(){
 
-    if [ $? -eq 0 ]
-    then
-        echo " checking mysql is installed or not??"
-        dnf list installed mysql &>> $logfile
-        if [ $? -eq 0 ]
-        then 
-            echo -e " mysql is $g already installed ! $n "
-            echo " nothing to do!!"
-            exit 1
-        else
-            echo -e " mysql is $r not installed in your system ! $n "
-            echo -e " $y going to install mysql in your system ! $n "
-            dnf install mysql-server -y     &>> $logfile   
-            valid installation
-            starting_enabling
-        fi
+ dnf install mysql-server -y &>> $logfile
+ valid installation
 
-    fi
+ systemctl enable mysqld &>> $logfile
+ valid enabling
+
+ systemctl start mysqld &>> $logfile
+ valid starting
+
 }
 
-starting_enabling(){
+passwordsetup(){
+mysql -h sql.daw19.online -u root -pExpenseApp@1 -e "show databases;" &>> $logfile
 
 if [ $? -eq 0 ]
 then
-    echo -e "$y going to start the mysql service!! $n "
-    systemctl start mysqld &>> $logfile
-    if [ $? -eq 0 ]
-    then
-        echo -e " mysql server is $g started $n "
-        echo -e " going to $y enable $n the mysql "
-        systemctl enable mysqld  &>> $logfile
-
-    fi
+echo -e " password setup is $g already done $n " | tee -a $logfile
 else
-    echo -e " mysql server is $r failed to start $n"
-fi
-
+echo -e " password setup process is$y initiated$n " | tee -a $logfile
+mysql_secure_installation --set-root-pass ExpenseApp@1
+valid password_setup
 }
 
-
-
-#calling the functions 
+#calling the functions
 
 check
 
 installation
 
-
+passwordsetup
