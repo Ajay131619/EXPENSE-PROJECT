@@ -88,7 +88,7 @@ then
         else
             echo -e " mysql server is $r failed to enable $n "
         fi
-
+    fi
 else
     echo -e " mysql server is $r failed to start $n"
 fi
