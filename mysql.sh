@@ -73,6 +73,7 @@ else
 echo -e " password setup process is$y initiated$n " | tee -a $logfile
 mysql_secure_installation --set-root-pass ExpenseApp@1
 valid password_setup
+fi
 }
 
 #calling the functions
