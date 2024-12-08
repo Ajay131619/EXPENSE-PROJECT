@@ -60,6 +60,17 @@ installation(){
         then 
             echo -e " mysql is $g already installed ! $n "
             echo " nothing to do!!"
+            echo "checking that the sql service is started and enabled or not!!"
+            check_status
+            if [ $? -eq 0 ]
+            then
+                echo -e " mysql service is already$g started and enabled $n "
+            else
+                echo -e " mysql service is $r not started and enabled $n "
+                starting_enabling
+            fi
+
+
             exit 1
         else
             echo -e " mysql is $r not installed in your system ! $n "
@@ -104,7 +115,6 @@ then
     echo -e " mysql server is $g running $n "
 else
     echo -e " mysql server is $r not running $n "
-    echo " check it once"
 fi
 }
 
