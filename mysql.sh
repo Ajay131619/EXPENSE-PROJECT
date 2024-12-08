@@ -83,7 +83,7 @@ then
         echo -e " mysql server is $g started $n "
         echo -e " going to $y enable $n the mysql "
         systemctl enable mysqld  &>> $logfile
-        check_status
+
     fi
 else
     echo -e " mysql server is $r failed to start $n"
@@ -91,18 +91,7 @@ fi
 
 }
 
-check_status(){
 
-systemctl netstat -ln | grep 3306 &>> $logfile
-#3306 is the port for the sql
-
-if [ $? -eq 0 ]
-then
-    echo -e " mysql server is $g running $n "
-else
-    echo -e " mysql server is $r not running $n "
-fi
-}
 
 #calling the functions 
 
@@ -110,3 +99,4 @@ check
 
 installation
 
+echo $(netstat -lntp | grep 3306 )
