@@ -67,6 +67,7 @@ installation(){
             echo -e " $y going to install mysql in your system ! $n "
             dnf install mysql-server -y     &>> $logfile   
             valid installation
+            starting_enabling
         fi
 
     fi
@@ -92,7 +93,7 @@ fi
 }
 
 check_status(){
-    systemctl netstat -lntp | grep 3306 &>> $logfile
+    systemctl netstat -ln | grep 3306 &>> $logfile
     #3306 is the port for the sql
 if [ $? -eq 0 ]
 then
@@ -108,4 +109,3 @@ check
 
 installation
 
-starting_enabling
