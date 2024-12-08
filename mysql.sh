@@ -61,7 +61,7 @@ installation(){
             echo -e " mysql is $g already installed ! $n "
             echo " nothing to do!!"
             check_status
-            
+            exit 1
         else
             echo -e " mysql is $r not installed in your system ! $n "
             echo -e " $y going to install mysql in your system ! $n "
@@ -93,8 +93,10 @@ fi
 }
 
 check_status(){
-    systemctl netstat -ln | grep 3306 &>> $logfile
-    #3306 is the port for the sql
+
+systemctl netstat -ln | grep 3306 &>> $logfile
+#3306 is the port for the sql
+
 if [ $? -eq 0 ]
 then
     echo -e " mysql server is $g running $n "
