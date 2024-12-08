@@ -75,20 +75,14 @@ starting_enabling(){
 
 if [ $? -eq 0 ]
 then
-    echo -e " $y going to start the mysql service!! $n "
+    echo -e "$y going to start the mysql service!! $n "
     systemctl start mysqld &>> $logfile
     if [ $? -eq 0 ]
     then
         echo -e " mysql server is $g started $n "
         echo -e " going to $y enable $n the mysql "
         systemctl enable mysqld  &>> $logfile
-        if [ $? -eq 0 ]
-        then
-            echo -e " mysql server is $g enabled successfully $n "
-            check_status
-        else
-            echo -e " mysql server is $r failed to enable $n "
-        fi
+        check_status
     fi
 else
     echo -e " mysql server is $r failed to start $n"
