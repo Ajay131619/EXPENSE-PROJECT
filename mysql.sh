@@ -68,11 +68,11 @@ mysql -h sql.daw19.online -u root -pExpenseApp@1 -e "show databases;" &>> $logfi
 
 if [ $? -eq 0 ]
 then
-echo -e " password setup is $g already done $n " | tee -a $logfile
+    echo -e " password setup is $g already done $n " | tee -a $logfile
 else
-echo -e " password setup process is$y initiated$n " | tee -a $logfile
-mysql_secure_installation --set-root-pass ExpenseApp@1
-valid password_setup
+    echo -e " password setup process is$y initiated$n " | tee -a $logfile
+    mysql_secure_installation --set-root-pass ExpenseApp@1
+    valid password_setup
 fi
 }
 
