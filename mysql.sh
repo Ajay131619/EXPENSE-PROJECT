@@ -60,7 +60,7 @@ installation(){
         then 
             echo -e " mysql is $g already installed ! $n "
             echo " nothing to do!!"
-            exit 1
+            
         else
             echo -e " mysql is $r not installed in your system ! $n "
             echo -e " $y going to install mysql in your system ! $n "
