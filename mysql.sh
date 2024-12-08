@@ -15,9 +15,9 @@ timestamp=$(date)
 scriptname=$(echo $0 | awk -F "." {'print $1F'})
 logfile="$folder/$scriptname-$timestamp.log"
 
-r="\e[33m" #red colour code
+r="\e[31m" #red colour code
 g="\e[32m" #green colour code
-y="\e[31m" #yellow colour code
+y="\e[33m" #yellow colour code
 n="\e[0m"  #no colour code
 
 #these colours are used for better user experience 
@@ -54,8 +54,8 @@ installation(){
 
     if [ $? -eq 0 ]
     then
-        echo "checking mysql is installed or not??"
-        dnf list installed mysql
+        echo " checking mysql is installed or not??"
+        dnf list installed mysql &>> $logfile
         if [ $? -eq 0 ]
         then 
             echo -e " mysql is $g already installed ! $n "
@@ -64,7 +64,7 @@ installation(){
         else
             echo -e " mysql is $r not installed in your system ! $n "
             echo -e " $y going to install mysql in your system ! $n "
-            dnf install mysql-server -y        
+            dnf install mysql-server -y     &>> $logfile   
             valid installation
         fi
 
@@ -76,12 +76,12 @@ starting_enabling(){
 if [ $? -eq 0 ]
 then
     echo -e " $y going to start the mysql service!! $n "
-    systemctl start mysqld
+    systemctl start mysqld &>> $logfile
     if [ $? -eq 0 ]
     then
         echo -e " mysql server is $g started $n "
         echo -e " going to $y enable $n the mysql "
-        systemctl enable mysqld
+        systemctl enable mysqld  &>> $logfile
         if [ $? -eq 0 ]
         then
             echo -e " mysql server is $g enabled successfully $n "
