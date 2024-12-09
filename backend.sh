@@ -66,7 +66,7 @@ fi
 
 mkdir -p /app
 valid " creation of /app "
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>> $logfile
 valid "Downloading backend application code"
 
 cd /app &>> $logfile
