@@ -64,7 +64,7 @@ installation(){
 }
 
 passwordsetup(){
-
+    
 mysql -h sql.daws19.online -u root -pExpenseApp@1 -e 'show databases;'  &>> $logfile
 
 if [ $? -eq 0 ]
