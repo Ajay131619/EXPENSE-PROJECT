@@ -9,6 +9,7 @@
 #description :: In this script , I am going to install the mysql tool ,setup the password and the username for the sql server, and I will also start and enable the mysql service and we will also check the service and the server is working or not 
 
 # here goes the script
+
 userid=$(id -u)
 folder="/var/log/EX-P_logs"
 timestamp=$(date)
