@@ -27,8 +27,8 @@ check(){
 
     if [ $userid -eq 0 ]
     then
-        echo -e " the execution of the script is $g started $n" | tee -a $logfile
         mkdir -p $folder
+        echo -e " the execution of the script is $g started $n" | tee -a $logfile
         echo -e " check the logs in this folder ->> $y "/var/log/EX-P_logs" $n "
     else
         echo -e " please run this script only using $y sudo access $n " | tee -a $logfile
@@ -40,15 +40,17 @@ check(){
 valid(){
 if [ $? -eq 0 ]
 then
-    echo -e " mysql server $1 is $g success $n " | tee -a $logfile
+    echo -e "  $1 is $g success $n " | tee -a $logfile
 else
-    echo -e " mysql server $1 is $r failed $n " | tee -a $logfile
+    echo -e "  $1 is $r failed $n " | tee -a $logfile
     exit 1
 fi
 }
 
 backend(){
-dnf install nodejs:20 -y &>> $logfile
+dnf module disable nodejs -y &>> $logfile
+dnf module enable nodejs:20 -y &>> $logfile
+dnf install nodejs -y &>> $logfile
 valid "installation of nodejs"
 
 id expense
