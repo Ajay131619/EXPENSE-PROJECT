@@ -28,7 +28,7 @@ check(){
     if [ $userid -eq 0 ]
     then
         mkdir -p $folder
-        echo -e " the execution of the script is $g started $n" | tee -a $logfile
+        echo -e " the execution of the script is $g started $n" | tee -a $logfilea
         echo -e " check the logs in this folder ->> $y "/var/log/EX-P_logs" $n "
     else
         echo -e " please run this script only using $y sudo access $n " | tee -a $logfile
@@ -40,9 +40,9 @@ check(){
 valid(){
 if [ $? -eq 0 ]
 then
-    echo -e "  $1 is $g success $n " | tee -a $logfile
+    echo -e " $1 is $g success $n " | tee -a $logfile
 else
-    echo -e "  $1 is $r failed $n " | tee -a $logfile
+    echo -e " $1 is $r failed $n " | tee -a $logfile
     exit 1
 fi
 }
@@ -53,14 +53,14 @@ dnf module enable nodejs:20 -y &>> $logfile
 dnf install nodejs -y &>> $logfile
 valid "installation of nodejs"
 
-id expense
+id expense &>> $logfile
 if [ $? -eq 0 ]
 then
     echo -e " expense user is $g already created!! $n " | tee -a $logfile
 else
     echo -e " expense user is  $y not created yet!! $n " | tee -a $logfile
     echo -e " going to create$y expense user!! $n " | tee -a $logfile
-    useradd expense 
+    useradd expense &>> $logfile
     valid "expense user creation"
 fi
 
@@ -73,19 +73,19 @@ cd /app &>> $logfile
 
 rm -rf /app/* | tee -a $logfile
 
-unzip /tmp/backend.zip | tee -a $logfile
+unzip /tmp/backend.zip &>> $logfile
 valid "unzipping backend application code"
 
 cd /app
 
 npm install &>> $logfile
 valid "installation of backend application dependencies"
-cp ~/EXPENSE-PROJECT/backend.service /etc/systemd/system/backend.service | tee -a $logfile
+cp ~/EXPENSE-PROJECT/backend.service /etc/systemd/system/backend.service &>> $logfile
 valid "backend service is created"
 
 
 systemctl enable backend &>> $logfile
-valid "enabling backend service "
+valid "enabling backend service"
 
 systemctl start backend &>> $logfile
 valid "starting backend service"
