@@ -99,5 +99,6 @@ systemctl restart backend &>> $logfile
 valid "restarting backend service"
 }
 
+#calling functions
 check
 backend
