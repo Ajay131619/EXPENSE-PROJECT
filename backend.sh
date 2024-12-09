@@ -80,11 +80,9 @@ cd /app
 
 npm install | tee -a $logfile
 valid "installation of backend application dependencies"
-cp /~/EXPENSE-PROJECT/backend.service /etc/systemd/system/backend.service | tee -a $logfile
+cp ~/EXPENSE-PROJECT/backend.service /etc/systemd/system/backend.service | tee -a $logfile
 valid "backend service is created"
 
-systemctl daemon-reload | tee -a $logfile
-valid "reloading the systemd"
 
 systemctl enable backend | tee -a $logfile
 valid "enabling backend service "
@@ -97,6 +95,9 @@ valid "installation of mysql"
 
 mysql -h sql.daws19.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>> $logfile
 valid "loading the schema"
+
+systemctl daemon-reload | tee -a $logfile
+valid "reloading the systemd"
 
 systemctl restart backend &>> $logfile
 valid "restarting backend service"
