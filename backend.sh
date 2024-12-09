@@ -67,7 +67,7 @@ fi
 mkdir -p /app
 valid " creation of /app "
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE
-VALIDATE "Downloading backend application code"
+valid "Downloading backend application code"
 
 cd /app &>> $logfile
 
@@ -78,16 +78,16 @@ valid "unzipping backend application code"
 
 cd /app
 
-npm install | tee -a $logfile
+npm install &>> $logfile
 valid "installation of backend application dependencies"
 cp ~/EXPENSE-PROJECT/backend.service /etc/systemd/system/backend.service | tee -a $logfile
 valid "backend service is created"
 
 
-systemctl enable backend | tee -a $logfile
+systemctl enable backend &>> $logfile
 valid "enabling backend service "
 
-systemctl start backend | tee -a $logfile
+systemctl start backend &>> $logfile
 valid "starting backend service"
 
 dnf install mysql -y &>> $logfile
@@ -96,7 +96,7 @@ valid "installation of mysql"
 mysql -h sql.daws19.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>> $logfile
 valid "loading the schema"
 
-systemctl daemon-reload | tee -a $logfile
+systemctl daemon-reload &>> $logfile
 valid "reloading the systemd"
 
 systemctl restart backend &>> $logfile
