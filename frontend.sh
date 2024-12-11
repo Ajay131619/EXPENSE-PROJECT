@@ -48,29 +48,29 @@ fi
 }
 
 front(){
-dnf install nginx -y &>> $logfile
+dnf install nginx -y &>>$logfile
 valid "nginx installation" | tee -a $logfile
 
-systemctl enable nginx &>> $logfile
+systemctl enable nginx &>>$logfile
 valid "enabling nginx service" | tee -a $logfile
 
-systemctl start nginx &>> $logfile
+systemctl start nginx &>>$logfile
 valid "starting nginx service" | tee -a $logfile
 
-rm -rf /usr/share/nginx/html/* &>> $logfile
+rm -rf /usr/share/nginx/html/* &>>$logfile
 valid "removing default html files" | tee -a $logfile
 
 curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>> $logfile
 valid "downloading frontend zip file" | tee -a $logfile
 
-cd /usr/share/nginx/html &>> $logfile
-unzip /tmp/frontend.zip &>> $logfile
+cd /usr/share/nginx/html &>>$logfile
+unzip /tmp/frontend.zip &>>$logfile
 valid "unzipping frontend zip file"  | tee -a $logfile
 
-cp ~/EXPENSE-PROJECT/frontend.conf /etc/nginx/default.d/expense.conf &>> $logfile
+cp ~/EXPENSE-PROJECT/frontend.conf /etc/nginx/default.d/expense.conf &>>$logfile
 valid "copying configuration"
 
-systemctl restart nginx &>> $logfile
+systemctl restart nginx &>>$logfile
 valid "restarting nginx service" | tee -a $logfile
 }
 
