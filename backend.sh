@@ -48,9 +48,9 @@ fi
 }
 
 backend(){
-dnf module disable nodejs -y &>> $logfile
-dnf module enable nodejs:20 -y &>> $logfile
-dnf install nodejs -y &>> $logfile
+dnf module disable nodejs -y &>>$logfile
+dnf module enable nodejs:20 -y &>>$logfile
+dnf install nodejs -y &>>$logfile
 valid "installation of nodejs"
 
 id expense &>> $logfile
@@ -60,46 +60,46 @@ then
 else
     echo -e " expense user is  $y not created yet!! $n " | tee -a $logfile
     echo -e " going to create$y expense user!! $n " | tee -a $logfile
-    useradd expense &>> $logfile
+    useradd expense &>>$logfile
     valid "expense user creation"
 fi
 
 mkdir -p /app
 valid " creation of /app "
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>> $logfile
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$logfile
 valid "Downloading backend application code"
 
-cd /app &>> $logfile
+cd /app &>>$logfile
 
 rm -rf /app/* | tee -a $logfile
 
-unzip /tmp/backend.zip &>> $logfile
+unzip /tmp/backend.zip &>>$logfile
 valid "unzipping backend application code"
 
 cd /app
 
-npm install &>> $logfile
+npm install &>>$logfile
 valid "installation of backend application dependencies"
-cp ~/EXPENSE-PROJECT/backend.service /etc/systemd/system/backend.service &>> $logfile
+cp ~/expense-project/backend.service /etc/systemd/system/backend.service &>>$logfile
 valid "backend service is created"
 
 
-systemctl enable backend &>> $logfile
+systemctl enable backend &>>$logfile
 valid "enabling backend service"
 
-systemctl start backend &>> $logfile
+systemctl start backend &>>$logfile
 valid "starting backend service"
 
-dnf install mysql -y &>> $logfile
+dnf install mysql -y &>>$logfile
 valid "installation of mysql"
 
-mysql -h sql.daws19.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>> $logfile
+mysql -h sql.daws19.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$logfile
 valid "loading the schema"
 
-systemctl daemon-reload &>> $logfile
+systemctl daemon-reload &>>$logfile
 valid "reloading the systemd"
 
-systemctl restart backend &>> $logfile
+systemctl restart backend &>>$logfile
 valid "restarting backend service"
 }
 
