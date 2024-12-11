@@ -68,7 +68,7 @@ unzip /tmp/frontend.zip &>> $logfile
 valid "unzipping frontend zip file"  | tee -a $logfile
 
 cp ~/EXPENSE-PROJECT/frontend.conf /etc/nginx/default.d/expense.conf &>> $logfile
-
+valid "copying configuration"
 
 systemctl restart nginx &>> $logfile
 valid "restarting nginx service" | tee -a $logfile
