@@ -60,15 +60,15 @@ valid "starting nginx service" | tee -a $logfile
 rm -rf /usr/share/nginx/html/* &>>$logfile
 valid "removing default html files" | tee -a $logfile
 
-curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>> $logfile
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$logfile
 valid "downloading frontend zip file" | tee -a $logfile
 
 cd /usr/share/nginx/html &>>$logfile
 unzip /tmp/frontend.zip &>>$logfile
 valid "unzipping frontend zip file"  | tee -a $logfile
 
-cp ~/EXPENSE-PROJECT/frontend.conf /etc/nginx/default.d/expense.conf &>>$logfile
-valid "copying configuration"
+# cp ~/expense-project/frontend.conf /etc/nginx/default.d/expense.conf &>>$logfile
+# valid "copying configuration"
 
 systemctl restart nginx &>>$logfile
 valid "restarting nginx service" | tee -a $logfile
